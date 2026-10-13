@@ -32,6 +32,16 @@ Run Migrations:
 ./vendor/bin/sail php artisan migrate
 ```
 
+Permissions:
+
+```sh
+./vendor/bin/sail exec laravel.test bash
+```
+
+```sh
+chmod -R 755 /storage/* /bootstrap/cache
+```
+
 Verify that Laravel runs:
 
 http://localhost
