@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['name', 'email', 'role', 'password'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -26,7 +26,17 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'password' => 'hashed'
         ];
+    }
+
+    public function isAdmin() // Puede asignar a otros usuarios y crud
+    {
+        return $this->role === 'Admin';
+    }
+
+    public function ticket() // Un usuario crea varios tickets
+    {
+        return $this->hasMany(Ticket::class);
     }
 }
