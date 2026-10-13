@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('created_by')->constrained('users')->cascadeOnDelete();
             $table->foreignId('assigned_to')->constrained('users')->cascadeOnDelete();
-            $table->string('title');
-            $table->string('description');
+            $table->string('title'); // Un breve texto que resuma la incidencia
+            $table->text('description'); // La descripción puede ser más larga
             $table->enum('status', ['pending', 'in_process', 'resolved']); // enum ya que son 3 posibles estados del ticket
             $table->enum('priority', ['low', 'medium', 'high']);
             $table->timestamp('modified_at');

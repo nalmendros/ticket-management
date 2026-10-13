@@ -30,7 +30,7 @@ class User extends Authenticatable
         ];
     }
 
-    public function isAdmin() // Puede asignar a otros usuarios y crud
+    public function isAdmin(): bool // Puede asignar a otros usuarios y crud
     {
         return $this->role === 'Admin';
     }
