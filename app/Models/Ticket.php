@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Ticket extends Model
 {
@@ -12,8 +13,7 @@ class Ticket extends Model
         'title',
         'description',
         'status',
-        'priority',
-        'modified_at'
+        'priority'
     ];
     
     public function createdBy() // El ticket es creado por una persona
@@ -22,7 +22,7 @@ class Ticket extends Model
     }
     public function assignedTo() // El ticket es asignado a un usuario
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class); //belongsTo
     }
 
 }

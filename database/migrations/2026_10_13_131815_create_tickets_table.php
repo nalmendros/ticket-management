@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('created_by')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('assigned_to')->constrained('users')->cascadeOnDelete();
+            $table->softDeletes();
+            $table->foreignId('created_by')->constrained('users');
+            $table->foreignId('assigned_to')->constrained('users')->nullable();
             $table->string('title'); // Un breve texto que resuma la incidencia
             $table->text('description'); // La descripción puede ser más larga
             $table->enum('status', ['pending', 'in_process', 'resolved']); // enum ya que son 3 posibles estados del ticket
             $table->enum('priority', ['low', 'medium', 'high']);
-            $table->timestamp('modified_at');
             $table->timestamps();
         });
     }
@@ -30,5 +30,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('tickets');
+
     }
 };
