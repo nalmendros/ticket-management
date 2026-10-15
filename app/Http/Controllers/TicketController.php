@@ -12,7 +12,9 @@ class TicketController extends Controller
     public function index()
     {
         $user = Auth::id();
-        $tickets = Ticket::where('assigned_to', $user)->get();
+        $tickets = Ticket::where('assigned_to', $user)
+        ->orWhere('created_by', $user)
+        ->get();
 
         return view('tickets.list', compact('tickets'));
     }
@@ -80,12 +82,27 @@ class TicketController extends Controller
         return redirect()->route('ticket.index')->with('success');
     }
 
-    public function ticketControl()
+    public function ticketControl(Request $request)
     {
+        $query = Ticket::query();
+
+        if ($request->searchStatus) {
+            $query->where('status', $request->searchStatus);
+        }
+        if ($request->searchPriority) {
+            $query->where('priority', $request->searchPriority);
+        }
+        if ($request->searchUser) {
+            $query->where('created_by', $request->searchUser);
+        }
+        
         if (!auth()->check() | !auth()->user()->isAdmin()) {
             abort(403);
         } 
-        $tickets = Ticket::all();
-        return view('tickets.control', compact('tickets'));
+        $users = User::all();
+        $tickets = $query->get();
+
+        return view('tickets.control', compact('tickets', 'users'));
     }
+
 }

@@ -5,6 +5,14 @@
         </h2>
 </x-slot>
 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+    <div class="p-3 items-center w-[50px] mb-5 rounded-xl bg-blue-400 hover:bg-[#333333] hover:text-white transition duration-300">
+        <a href="{{ route('ticket.create')}}">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+        </a>
+    </div>
+
     <table class="table-auto md:table-fixed border-collapse border-gray-400 w-full">
         <thead>
             <tr class="bg-[#333333] text-white">
