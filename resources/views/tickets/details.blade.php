@@ -4,37 +4,39 @@
         {{ __('Ticket')}} - {{$ticket->id}}
     </h2>
 </x-slot>
-<div class="p-12">
-
-    <table class="w-full border">
+<div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 overflow-hidden rounded-lg">
+    <table class="table-auto md:table-fixed border-collapse border-gray-400 w-full shadow-xl">
         <thead>
-            <tr>
-                <td>Title</td>
-                <td>Description</td>
-                <td>Created By</td>
-                <td>Assigned To</td>
-                <td>Status</td>
-                <td>Priority</td>
-                <td>Created At</td>
-                <td>Actions</td>
+            <tr class="bg-[#333333] text-white">
+                <td class="border border-gray-400 p-4 rounded-tl-xl">Title</td>
+                <td class="border border-gray-400 p-4">Description</td>
+                <td class="border border-gray-400 p-4">Created By</td>
+                <td class="border border-gray-400 p-4">Assigned To</td>
+                <td class="border border-gray-400 p-4">Status</td>
+                <td class="border border-gray-400 p-4">Priority</td>
+                <td class="border border-gray-400 p-4">Created At</td>
+                <td class="border border-gray-400 p-4 rounded-tr-xl">Actions</td>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>{{$ticket->title}}</td>
-                <td>{{$ticket->description}}</td>
-                <td>{{$ticket->createdBy->name ?? 'Anonimous'}}</td>
-                <td>{{$ticket->assignedTo->name ?? 'Not assigned yet'}}</td>
-                <td>{{$ticket->status}}</td>
-                <td>{{$ticket->priority}}</td>
-                <td>{{$ticket->created_at}}</td>
-                <td>
-                    <form method="POST" action="{{ route('ticket.destroy', $ticket->id) }}" onsubmit = "return confirm('Are you sure you want to delete this ticket?')">
-                        @csrf
-                        @method('DELETE')
-                        <button value="delete" class="bg-[##ed0202] color-white p-4 rounded-xl">Delete</button>
-                    </form>
-                    <a href="{{ route('ticket.edit', $ticket->id) }}" style="color: blue">Edit</a>
+                <td class="border border-gray-400 p-4">{{$ticket->title}}</td>
+                <td class="border border-gray-400 p-4">{{$ticket->description}}</td>
+                <td class="border border-gray-400 p-4">{{$ticket->createdBy->name ?? 'Anonimous'}}</td>
+                <td class="border border-gray-400 p-4">{{$ticket->assignedTo->name ?? 'Not assigned yet'}}</td>
+                <td class="border border-gray-400 p-4">{{$ticket->status}}</td>
+                <td class="border border-gray-400 p-4">{{$ticket->priority}}</td>
+                <td class="border border-gray-400 p-4">{{$ticket->created_at}}</td>
+                <td class="border border-gray-400 p-4">
+                    <div class="flex gap-2 items-center">
+
+                        <form method="POST" action="{{ route('ticket.destroy', $ticket->id) }}" onsubmit = "return confirm('Are you sure you want to delete this ticket?')">
+                            @csrf
+                            @method('DELETE')
+                            <button value="delete" class="bg-red-500 hover:bg-red-400 p-2.5 rounded-xl transition duration-300">Delete</button>
+                        </form>
+                        <a href="{{ route('ticket.edit', $ticket->id) }}" class="bg-blue-400 hover:bg-blue-300 p-3 rounded-xl transition duration-300">Edit</a>
+                    </div>
                 </td>
             </tr>
         </tbody>

@@ -34,13 +34,13 @@
                 <option value="medium">Medium</option>
                 <option value="high">High</option>
             </select>  
-        <button value="create" id="button" class="cursor-pointer bg-[#06ba77] p-3 rounded-xl hover:bg-[#333333] hover:text-white">Create</button>
+        <button value="create" id="button" class="cursor-pointer bg-[#06ba77] p-3 rounded-xl hover:bg-[#333333] hover:text-white transition duration-300">Create</button>
+        
+        @if (session('success'))
+        <p style="color: green">{{ session('success') }}</p>
+        @endif
     </form>
 </div>
-
-@if (session('success'))
-<p style="color: green">{{ session('success') }}</p>
-@endif
 
 @if ($errors->any())
     @foreach ($errors->all() as $error )

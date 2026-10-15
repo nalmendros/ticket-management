@@ -28,7 +28,7 @@
                 <td class="border border-gray-400 p-4">{{$ticket->status}}</td>
                 <td class="border border-gray-400 p-4">{{$ticket->priority}}</td>
                 <td class="border border-gray-400 p-4">{{$ticket->created_at}}</td>
-                <td class="border border-gray-400 p-4"><a href="{{ route('ticket.show', $ticket->id )}}" class="cursor-pointer bg-[#06ba77] p-3 rounded-xl hover:bg-[#333333] hover:text-white">Details</a></td>
+                <td class="border border-gray-400 p-4"><a href="{{ route('ticket.show', $ticket->id )}}" class="cursor-pointer bg-blue-400 p-3 rounded-xl hover:bg-[#333333] hover:text-white transition duration-300">Details</a></td>
             </tr>
         </tbody>
         @empty
