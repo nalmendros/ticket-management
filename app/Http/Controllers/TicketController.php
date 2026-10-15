@@ -93,7 +93,7 @@ class TicketController extends Controller
             $query->where('priority', $request->searchPriority);
         }
         if ($request->searchUser) {
-            $query->where('created_by', $request->searchUser);
+            $query->where('assigned_to', $request->searchUser);
         }
         
         if (!auth()->check() | !auth()->user()->isAdmin()) {

@@ -13,6 +13,7 @@
         <div>
             <select id="searchUser" name="searchUser" class="rounded-xl">
                 <option value="">All Users</option>
+                <option value="null">Not assigned yet</option>
                 @foreach ($users as $user)
                     <option value="{{ $user->id }}" {{ request('searchUser') == $user->id ? 'selected' : ''}} >{{ $user->name }}</option>
                 @endforeach
