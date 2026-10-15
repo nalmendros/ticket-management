@@ -50,7 +50,7 @@ class TicketController extends Controller
             'priority' => $request->priority,
         ]);
         
-        $ticket->save();
+        //$ticket->save();
 
         return redirect()->route('ticket.create')->with('success', 'Ticket created successfully.');
 

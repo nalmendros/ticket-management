@@ -15,11 +15,13 @@
         <textarea name="description" value="{{ $ticket->description }}" id="description" type="text">{{ $ticket->description }}</textarea>
         <label for="assigned_to">Assign User</label>
         <select id="assigned_to" name="assigned_to">
-            @foreach ($ticket->assignedTo() as $assignee)
-            <option value="{{ $assignee->id }}" selected>{{ $assignee->name}}</option>
-            @endforeach
+            
             @forelse ($users as $user)
-            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                @if($user->id == $ticket->assigned_to)
+                <option value="{{ $user->id }}" selected>{{ $user->name}}</option>
+                @else
+                <option value="{{ $user->id }}" >{{ $user->name }}</option>
+                @endif
             @empty
             <p>There's no users to assign</p>
             @endforelse
