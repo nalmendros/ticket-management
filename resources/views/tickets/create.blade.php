@@ -4,16 +4,15 @@
         {{ __('Ticket Create')}}
     </h2>
 </x-slot>
-<div class="p-12 justify-center">
-
-    <form method = "POST" action="{{ route('ticket.store') }}" class="flex flex-col w-1/2">
+<div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+    <form method = "POST" action="{{ route('ticket.store') }}" class="flex flex-col w-1/2 gap-3">
         @csrf
             <label for="title">Title</label>
-            <input name="title" type="text" id="title" value="{{ old('title') }}">
+            <input name="title" type="text" id="title" value="{{ old('title') }}" class="rounded-xl">
             <label for="description">Description</label>
-            <textarea name="description" value="{{ old('description') }}" id="description" type="text"></textarea>
+            <textarea name="description" value="{{ old('description') }}" id="description" type="text" class="rounded-xl"></textarea>
             <label for="assigned_to">Assign User</label>
-            <select id="assigned_to" name="assigned_to">
+            <select id="assigned_to" name="assigned_to" class="rounded-xl">
                 <option value="">No Assign Yet</option>
                 @forelse ($users as $user)
                 <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -22,18 +21,18 @@
                 @endforelse
             </select>   
             <label for="status">Status</label>
-            <select id="status" name="status">
+            <select id="status" name="status" class="rounded-xl">
                 <option value="pending">Pending</option>
                 <option value="in_process">In Process</option>
                 <option value="resolved">Resolved</option>
             </select>
             <label for="priority">Priority</label>
-            <select id="priority" name="priority">
+            <select id="priority" name="priority" class="rounded-xl">
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
                 <option value="high">High</option>
             </select>  
-        <button value="create" id="button">Create</button>
+        <button value="create" id="button" class="cursor-pointer bg-[#06ba77] p-3 rounded-xl hover:bg-[#333333] hover:text-white">Create</button>
     </form>
 </div>
 
