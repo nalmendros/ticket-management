@@ -11,8 +11,10 @@
         <h1>Dashboard</h1>
     </header>
     <main>
-        <a style="font-size: 26px;" href="{{ route('index') }}">View Tickets</a>
-        <a style="font-size: 26px;" href="{{ route('create') }}">Create Tickets</a>
+        <div style="display: flex; align-items: center; gap: 50px; color: #01a76a; font-weight: 600;">
+            <a style="font-size: 26px;" href="{{ route('ticket.index') }}">View Tickets</a>
+            <a style="font-size: 26px;" href="{{ route('ticket.create') }}">Create Tickets</a>
+        </div>
         @yield('content')
     </main>
 </body>

@@ -16,43 +16,70 @@ class TicketController extends Controller
         return view('tickets.list', compact('tickets'));
     }
 
+    public function show(Ticket $ticket)
+    {
+        return view('tickets.details', compact('ticket'));
+    }
+
     public function create()
     {
-        return view('tickets.create');
+        $users = User::all();
+        return view('tickets.create', compact('users'));
     }
 
     public function store(Request $request)
     {
-        $user = Auth::user();
+        $user = Auth::User();
 
         $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'required|text',
+            'description' => 'required',
+            'assigned_to' => 'nullable|exists:users,id',
+            'status' => 'required|in:pending,in_process,resolved',
+            'priority' => 'required|in:low,medium,high',
         ]);
+
+        
 
         $ticket = Ticket::create([
-            'created_by' => $user,
-            'assigned_to' => $request->input('assigned_to'),
+            'created_by' => Auth::id(),
             'title' => $request->title,
             'description' => $request->description,
-            'status' => $request->input('status'),
-            'priority' => $request->input('priority'),
-            'created_at' => now(),
+            'assigned_to' => $request->input('assigned_to'),
+            'status' => $request->status,
+            'priority' => $request->priority,
         ]);
-
+        
         $ticket->save();
 
-        return redirect()->route('ticket.create')->with('success');
+        return redirect()->route('ticket.create')->with('success', 'Ticket created successfully.');
 
+    }
+
+    public function edit(Ticket $ticket)
+    {
+        $users = User::all();
+        return view('tickets.edit', compact('ticket', 'users'));
     }
     public function update(Request $request, $id)
     {
         $ticket = Ticket::findOrFail($id);
         $ticket->title = $request->title;
         $ticket->description = $request->description;
+        $ticket->assigned_to = $request->assigned_to;
         $ticket->status = $request->status;
         $ticket->priority = $request->priority;
         $ticket->save();
-        return redirect()->route('ticket.update')->with('success');
+        return redirect()->route('ticket.show', $ticket->id)->with('success', 'Ticket updated successfully.');
+    }
+
+    public function destroy(Ticket $ticket)
+    {
+        if ($ticket->assignedTo) {
+            return redirect()->route('ticket.show', $ticket->id)->with('error', 'This ticket is assigned');
+        } else {
+            $ticket->delete();
+        }
+        return redirect()->route('ticket.index')->with('success');
     }
 }
