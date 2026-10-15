@@ -31,4 +31,11 @@ public function assignedTo()
 ```
 Cada Ticket es asignado a un usuario.
 
+## TicketController
+
+`` App\Http\Controllers\TicketController.php `` he añadido dos funciones además de las básicas (CRUD). 
+
+- ticketUser(): redirige a la vista del panel de los tickets asignados al usuario
+- ticketControl(): redirige a la vista del panel de control del usuario admin. La funcionalidad es que tiene la condición que solo el admin puede visualizar. Un usuario normal no.
+
 

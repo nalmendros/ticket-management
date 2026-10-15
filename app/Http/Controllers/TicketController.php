@@ -40,8 +40,6 @@ class TicketController extends Controller
             'priority' => 'required|in:low,medium,high',
         ]);
 
-        
-
         $ticket = Ticket::create([
             'created_by' => Auth::id(),
             'title' => $request->title,
@@ -51,8 +49,6 @@ class TicketController extends Controller
             'priority' => $request->priority,
         ]);
         
-        //$ticket->save();
-
         return redirect()->route('ticket.create')->with('success', 'Ticket created successfully.');
 
     }
@@ -82,11 +78,6 @@ class TicketController extends Controller
             $ticket->delete();
         }
         return redirect()->route('ticket.index')->with('success');
-    }
-
-    public function ticketUser()
-    {
-        return view('tickets.my-ticket');
     }
 
     public function ticketControl()
