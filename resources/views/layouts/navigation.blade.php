@@ -12,8 +12,14 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    
+                    @if (auth()->user()->isAdmin())
+                    <x-nav-link :href="route('ticket.control')" :active="request()->routeIs('ticket.control')">
+                        {{ __('Tickets Control') }}
+                    </x-nav-link>
+                    @endif
                     <x-nav-link :href="route('ticket.index')" :active="request()->routeIs('ticket.index')">
-                        {{ __('Tickets') }}
+                        {{ __('My Tickets') }}
                     </x-nav-link>
                     <x-nav-link :href="route('ticket.create')" :active="request()->routeIs('ticket.create')">
                         {{ __('Create Ticket') }}

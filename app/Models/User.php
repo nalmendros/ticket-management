@@ -32,7 +32,7 @@ class User extends Authenticatable
 
     public function isAdmin(): bool // Puede asignar a otros usuarios y crud
     {
-        return $this->role === 'Admin';
+        return $this->role === 'admin';
     }
 
     public function ticket() // Un usuario crea varios tickets

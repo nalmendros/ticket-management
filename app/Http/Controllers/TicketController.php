@@ -11,7 +11,8 @@ class TicketController extends Controller
 {
     public function index()
     {
-        $tickets = Ticket::all();
+        $user = Auth::id();
+        $tickets = Ticket::where('assigned_to', $user)->get();
 
         return view('tickets.list', compact('tickets'));
     }
@@ -81,5 +82,19 @@ class TicketController extends Controller
             $ticket->delete();
         }
         return redirect()->route('ticket.index')->with('success');
+    }
+
+    public function ticketUser()
+    {
+        return view('tickets.my-ticket');
+    }
+
+    public function ticketControl()
+    {
+        if (!auth()->check() | !auth()->user()->isAdmin()) {
+            abort(403);
+        } 
+        $tickets = Ticket::all();
+        return view('tickets.control', compact('tickets'));
     }
 }

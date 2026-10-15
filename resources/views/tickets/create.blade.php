@@ -11,6 +11,7 @@
             <input name="title" type="text" id="title" value="{{ old('title') }}" class="rounded-xl">
             <label for="description">Description</label>
             <textarea name="description" value="{{ old('description') }}" id="description" type="text" class="rounded-xl"></textarea>
+            @if (auth()->user()->isAdmin())
             <label for="assigned_to">Assign User</label>
             <select id="assigned_to" name="assigned_to" class="rounded-xl">
                 <option value="">No Assign Yet</option>
@@ -20,6 +21,7 @@
                 <p>There's no users to assign</p>
                 @endforelse
             </select>   
+            @endif
             <label for="status">Status</label>
             <select id="status" name="status" class="rounded-xl">
                 <option value="pending">Pending</option>
