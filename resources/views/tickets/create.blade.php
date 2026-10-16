@@ -4,8 +4,8 @@
         {{ __('Ticket Create')}}
     </h2>
 </x-slot>
-<div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-    <form method = "POST" action="{{ route('ticket.store') }}" class="flex flex-col w-1/2 gap-3">
+<div class="max-w-2xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+    <form method = "POST" action="{{ route('ticket.store') }}" class="flex flex-col gap-3">
         @csrf
             <label for="title">Title</label>
             <input name="title" type="text" id="title" value="{{ old('title') }}" class="rounded-xl">
@@ -14,7 +14,7 @@
             @if (auth()->user()->isAdmin())
             <label for="assigned_to">Assign User</label>
             <select id="assigned_to" name="assigned_to" class="rounded-xl">
-                <option value="">No Assign Yet</option>
+                <option value="">No Assigned Yet</option>
                 @forelse ($users as $user)
                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                 @empty

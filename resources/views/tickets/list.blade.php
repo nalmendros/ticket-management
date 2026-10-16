@@ -12,36 +12,37 @@
             </svg>
         </a>
     </div>
-
-    <table class="table-auto md:table-fixed border-collapse border-gray-400 w-full">
-        <thead>
-            <tr class="bg-[#333333] text-white">
-                <td class="border border-gray-400 p-4">Title</td>
-                <td class="border border-gray-400 p-4">Description</td>
-                <td class="border border-gray-400 p-4">Created By</td>
-                <td class="border border-gray-400 p-4">Assigned To</td>
-                <td class="border border-gray-400 p-4">Status</td>
-                <td class="border border-gray-400 p-4">Priority</td>
-                <td class="border border-gray-400 p-4">Created At</td>
-                <td class="border border-gray-400 p-4">Actions</td>
-            </tr>
-        </thead>
-        @forelse ($tickets as $ticket)
-        <tbody>
-            <tr>
-                <td class="border border-gray-400 p-4">{{$ticket->title}}</td>
-                <td class="border border-gray-400 p-4">{{$ticket->description}}</td>
-                <td class="border border-gray-400 p-4">{{$ticket->createdBy->name ?? 'Anonimous'}}</td>
-                <td class="border border-gray-400 p-4">{{$ticket->assignedTo->name ?? 'Not assigned yet'}}</td>
-                <td class="border border-gray-400 p-4">{{$ticket->status}}</td>
-                <td class="border border-gray-400 p-4">{{$ticket->priority}}</td>
-                <td class="border border-gray-400 p-4">{{$ticket->created_at}}</td>
-                <td class="border border-gray-400 p-4"><a href="{{ route('ticket.show', $ticket->id )}}" class="cursor-pointer bg-blue-400 p-3 rounded-xl hover:bg-[#333333] hover:text-white transition duration-300">Details</a></td>
-            </tr>
-        </tbody>
-        @empty
-        <p>There are not tickets.</p>
-        @endforelse
-    </table>
+    <div class="overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="border-collapse border-gray-400 w-full">
+            <thead>
+                <tr class="bg-[#333333] text-white">
+                    <td class="border border-gray-400 p-4">Title</td>
+                    <td class="border border-gray-400 p-4">Description</td>
+                    <td class="border border-gray-400 p-4">Created By</td>
+                    <td class="border border-gray-400 p-4">Assigned To</td>
+                    <td class="border border-gray-400 p-4">Status</td>
+                    <td class="border border-gray-400 p-4">Priority</td>
+                    <td class="border border-gray-400 p-4">Created At</td>
+                    <td class="border border-gray-400 p-4">Actions</td>
+                </tr>
+            </thead>
+            @forelse ($tickets as $ticket)
+            <tbody>
+                <tr>
+                    <td class="border border-gray-400 p-4">{{$ticket->title}}</td>
+                    <td class="border border-gray-400 p-4">{{$ticket->description}}</td>
+                    <td class="border border-gray-400 p-4">{{$ticket->createdBy->name ?? 'Anonimous'}}</td>
+                    <td class="border border-gray-400 p-4">{{$ticket->assignedTo->name ?? 'Not assigned yet'}}</td>
+                    <td class="border border-gray-400 p-4">{{$ticket->status}}</td>
+                    <td class="border border-gray-400 p-4">{{$ticket->priority}}</td>
+                    <td class="border border-gray-400 p-4">{{$ticket->created_at}}</td>
+                    <td class="border border-gray-400 p-4"><a href="{{ route('ticket.show', $ticket->id )}}" class="cursor-pointer bg-blue-400 p-3 rounded-xl hover:bg-[#333333] hover:text-white transition duration-300">Details</a></td>
+                </tr>
+            </tbody>
+            @empty
+            <p>There are not tickets.</p>
+            @endforelse
+        </table>
+    </div>
 </div>
 </x-app-layout>

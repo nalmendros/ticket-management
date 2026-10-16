@@ -4,8 +4,8 @@
         {{ __('Ticket')}} - {{$ticket->id}}
     </h2>
 </x-slot>
-<div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 overflow-hidden rounded-lg">
-    <table class="table-auto md:table-fixed border-collapse border-gray-400 w-full shadow-xl">
+<div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="border-collapse border-gray-400 w-full shadow-xl">
         <thead>
             <tr class="bg-[#333333] text-white">
                 <td class="border border-gray-400 p-4 rounded-tl-xl">Title</td>

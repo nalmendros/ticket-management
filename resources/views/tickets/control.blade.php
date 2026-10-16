@@ -8,16 +8,18 @@
 
     {{-------------------------- FILTERS -----------------}}
 
-    <form method="GET" action="{{ route('ticket.control')}}" class="flex mb-3 gap-3">
+
+    <form method="GET" action="{{ route('ticket.control')}}" class="flex flex-col md:flex-row mb-3 gap-3">
         @csrf
         <div>
             <select id="searchUser" name="searchUser" class="rounded-xl">
                 <option value="">All Users</option>
-                <option value="null">Not assigned yet</option>
+                <option value="null" {{ request('searchUser') == 'null' ? 'selected' : ''}}>Not assigned yet</option>
                 @foreach ($users as $user)
-                    <option value="{{ $user->id }}" {{ request('searchUser') == $user->id ? 'selected' : ''}} >{{ $user->name }}</option>
+                    <option value="{{ $user->id }}" {{ request('searchUser') == $user->id ? 'selected' : ''}}>{{ $user->name }}</option>
                 @endforeach
             </select>   
+            
         </div>
         <div>
             @php 
@@ -40,48 +42,53 @@
             @endforeach
         </select>
         </div>
-        <button value="Search">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-            </svg>
-        </button>
-        <a href="{{ route('ticket.control') }}" class="bg-blue-400 p-3 rounded-xl hover:bg-[#333333] hover:text-white transition duration-300">
-            Clear
-        </a>
+        <div class="flex gap-3 ">
+            <button value="Search">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                </svg>
+            </button>
+            <a href="{{ route('ticket.control') }}" class="bg-blue-400 p-3 rounded-xl hover:bg-[#333333] hover:text-white transition duration-300">
+                Clear
+            </a>
+        </div>
     </form>
+
 
     {{-------------------------- TICKET LIST --------------------------}}
 
+    <div class="overflow-x-auto shadow-md sm:rounded-lg">
 
-    <table class="table-auto md:table-fixed border-collapse border-gray-400 w-full">
-        <thead>
-            <tr class="bg-[#333333] text-white">
-                <td class="border border-gray-400 p-4">Title</td>
-                <td class="border border-gray-400 p-4">Description</td>
-                <td class="border border-gray-400 p-4">Created By</td>
-                <td class="border border-gray-400 p-4">Assigned To</td>
-                <td class="border border-gray-400 p-4">Status</td>
-                <td class="border border-gray-400 p-4">Priority</td>
-                <td class="border border-gray-400 p-4">Created At</td>
-                <td class="border border-gray-400 p-4">Actions</td>
-            </tr>
-        </thead>
-        @forelse ($tickets as $ticket)
-        <tbody>
-            <tr>
-                <td class="border border-gray-400 p-4">{{$ticket->title}}</td>
-                <td class="border border-gray-400 p-4">{{$ticket->description}}</td>
-                <td class="border border-gray-400 p-4">{{$ticket->createdBy->name ?? 'Anonimous'}}</td>
-                <td class="border border-gray-400 p-4">{{$ticket->assignedTo->name ?? 'Not assigned yet'}}</td>
-                <td class="border border-gray-400 p-4">{{$ticket->status}}</td>
-                <td class="border border-gray-400 p-4">{{$ticket->priority}}</td>
-                <td class="border border-gray-400 p-4">{{$ticket->created_at}}</td>
-                <td class="border border-gray-400 p-4"><a href="{{ route('ticket.show', $ticket->id )}}" class="cursor-pointer bg-blue-400 p-3 rounded-xl hover:bg-[#333333] hover:text-white transition duration-300">Details</a></td>
-            </tr>
-        </tbody>
-        @empty
-        <p>There are not tickets.</p>
-        @endforelse
-    </table>
+        <table class="border-collapse border-gray-400 w-full">
+            <thead>
+                <tr class="bg-[#333333] text-white">
+                    <td class="border border-gray-400 p-4">Title</td>
+                    <td class="border border-gray-400 p-4">Description</td>
+                    <td class="border border-gray-400 p-4">Created By</td>
+                    <td class="border border-gray-400 p-4">Assigned To</td>
+                    <td class="border border-gray-400 p-4">Status</td>
+                    <td class="border border-gray-400 p-4">Priority</td>
+                    <td class="border border-gray-400 p-4">Created At</td>
+                    <td class="border border-gray-400 p-4">Actions</td>
+                </tr>
+            </thead>
+            @forelse ($tickets as $ticket)
+            <tbody>
+                <tr>
+                    <td class="border border-gray-400 p-4">{{$ticket->title}}</td>
+                    <td class="border border-gray-400 p-4">{{$ticket->description}}</td>
+                    <td class="border border-gray-400 p-4">{{$ticket->createdBy->name ?? 'Anonimous'}}</td>
+                    <td class="border border-gray-400 p-4">{{$ticket->assignedTo->name ?? 'Not assigned yet'}}</td>
+                    <td class="border border-gray-400 p-4">{{$ticket->status}}</td>
+                    <td class="border border-gray-400 p-4">{{$ticket->priority}}</td>
+                    <td class="border border-gray-400 p-4">{{$ticket->created_at}}</td>
+                    <td class="border border-gray-400 p-4"><a href="{{ route('ticket.show', $ticket->id )}}" class="cursor-pointer bg-blue-400 p-3 rounded-xl hover:bg-[#333333] hover:text-white transition duration-300">Details</a></td>
+                </tr>
+            </tbody>
+            @empty
+            <p>There are not tickets.</p>
+            @endforelse
+        </table>
+    </div>
 </div>
 </x-app-layout>
