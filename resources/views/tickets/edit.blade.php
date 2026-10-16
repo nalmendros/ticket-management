@@ -44,14 +44,12 @@
         @endif
         <button value="create" id="button" class="cursor-pointer bg-[#06ba77] p-3 rounded-xl hover:bg-[#333333] hover:text-white transition duration-300">Confirm Edit</button>
     </form>
+    
+    
+    @if ($errors->any())
+        @foreach ($errors->all() as $error )
+            <li class="text-red-500">{{ $error }}</li>
+        @endforeach
+    @endif
 </div>
-@if (session('success'))
-    <p style="color: green">{{ session('success') }}</p>
-@endif
-
-@if ($errors->any())
-    @foreach ($errors->all() as $error )
-        <li>{{ $error }}</li>
-    @endforeach
-@endif
 </x-app-layout>

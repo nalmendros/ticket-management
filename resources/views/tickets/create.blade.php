@@ -40,11 +40,11 @@
         <p style="color: green">{{ session('success') }}</p>
         @endif
     </form>
+    @if ($errors->any())
+        @foreach ($errors->all() as $error )
+            <li class="text-red-500">{{ $error }}</li>
+        @endforeach
+    @endif
 </div>
 
-@if ($errors->any())
-    @foreach ($errors->all() as $error )
-        <li>{{ $error }}</li>
-    @endforeach
-@endif
 </x-app-layout>

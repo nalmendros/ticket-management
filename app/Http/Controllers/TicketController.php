@@ -58,9 +58,11 @@ class TicketController extends Controller
 
     }
 
-    public function edit(Ticket $ticket)
+    public function edit(Ticket $ticket, Request $request)
     {
-        
+        if ($request->user()->cannot('view', $ticket)) {
+            abort(403);
+        }
         $users = User::all();
         return view('tickets.edit', compact('ticket', 'users'));
     }
@@ -85,7 +87,7 @@ class TicketController extends Controller
         if ($request->user()->isAdmin()) {
             $adminData = $request->validate([
                 'assigned_to' => 'nullable|exists:users,id',
-                'status' => 'required|in:pending,in_progress,resolved',
+                'status' => 'required|in:pending,in_process,resolved',
                 'priority' => 'required|in:low,medium,high',
             ]);
 
