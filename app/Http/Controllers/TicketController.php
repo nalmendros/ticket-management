@@ -115,6 +115,10 @@ class TicketController extends Controller
 
     public function ticketControl(Request $request)
     {
+        if (!auth()->check() || !auth()->user()->isAdmin()) {
+            abort(403);
+        } 
+
         $query = Ticket::query();
 
         if ($request->searchStatus) {
@@ -133,10 +137,6 @@ class TicketController extends Controller
                 $query->where('assigned_to', $request->searchUser);
             }
         }
-        
-        if (!auth()->check() || !auth()->user()->isAdmin()) {
-            abort(403);
-        } 
 
         $users = User::all();
         $tickets = $query->get();
