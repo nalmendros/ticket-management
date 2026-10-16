@@ -121,7 +121,7 @@ class TicketController extends Controller
             Log::info($request->searchStatus);
             $query->where('status', $request->searchStatus);
         }
-        /*
+        
         if ($request->searchPriority) {
             $query->where('priority', $request->searchPriority);
         }
@@ -133,7 +133,7 @@ class TicketController extends Controller
                 $query->where('assigned_to', $request->searchUser);
             }
         }
-        */
+        
         if (!auth()->check() || !auth()->user()->isAdmin()) {
             abort(403);
         } 
