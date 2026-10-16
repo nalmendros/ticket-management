@@ -26,7 +26,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/tickets/{ticket}', [TicketController::class, 'destroy'])->name('ticket.destroy');
 
     Route::get('/tickets-control', [TicketController::class, 'ticketControl'])->name('ticket.control');
-    });
+});
 
 
 require __DIR__.'/auth.php';

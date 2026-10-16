@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class TicketController extends Controller
 {
@@ -117,8 +118,10 @@ class TicketController extends Controller
         $query = Ticket::query();
 
         if ($request->searchStatus) {
+            Log::info($request->searchStatus);
             $query->where('status', $request->searchStatus);
         }
+        /*
         if ($request->searchPriority) {
             $query->where('priority', $request->searchPriority);
         }
@@ -130,7 +133,7 @@ class TicketController extends Controller
                 $query->where('assigned_to', $request->searchUser);
             }
         }
-        
+        */
         if (!auth()->check() || !auth()->user()->isAdmin()) {
             abort(403);
         } 
