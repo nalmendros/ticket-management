@@ -12,8 +12,8 @@ class TicketController extends Controller
 {
     public function index()
     {
-        $user = Auth::id();
-        $tickets = Ticket::where('assigned_to', $user)
+        $userId = Auth::id();
+        $tickets = Ticket::where('assigned_to', $userId)
         ->orWhere('created_by', $user)
         ->get();
 
