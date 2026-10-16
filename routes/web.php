@@ -28,6 +28,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/tickets-control', [TicketController::class, 'ticketControl'])->name('ticket.control');
     });
 
-    
 
 require __DIR__.'/auth.php';

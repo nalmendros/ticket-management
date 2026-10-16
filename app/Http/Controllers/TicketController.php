@@ -19,8 +19,11 @@ class TicketController extends Controller
         return view('tickets.list', compact('tickets'));
     }
 
-    public function show(Ticket $ticket)
+    public function show(Ticket $ticket, Request $request)
     {
+        if ($request->user()->cannot('view', $ticket)) {
+            abort(403);
+        }
         return view('tickets.details', compact('ticket'));
     }
 
@@ -57,23 +60,48 @@ class TicketController extends Controller
 
     public function edit(Ticket $ticket)
     {
+        
         $users = User::all();
         return view('tickets.edit', compact('ticket', 'users'));
     }
+
     public function update(Request $request, $id)
     {
+        
         $ticket = Ticket::findOrFail($id);
-        $ticket->title = $request->title;
-        $ticket->description = $request->description;
-        $ticket->assigned_to = $request->assigned_to;
-        $ticket->status = $request->status;
-        $ticket->priority = $request->priority;
+        
+        if ($request->user()->cannot('update', $ticket)) {
+            abort(403);
+        }
+
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required',
+        ]);
+
+        $ticket->title = $validated['title'];
+        $ticket->description = $validated['description'];
+
+        if ($request->user()->isAdmin()) {
+            $adminData = $request->validate([
+                'assigned_to' => 'nullable|exists:users,id',
+                'status' => 'required|in:pending,in_progress,resolved',
+                'priority' => 'required|in:low,medium,high',
+            ]);
+
+            $ticket->assigned_to = $adminData['assigned_to'];
+            $ticket->status = $adminData['status'];
+            $ticket->priority = $adminData['priority'];
+        }
+
         $ticket->save();
+        
         return redirect()->route('ticket.show', $ticket->id)->with('success', 'Ticket updated successfully.');
     }
 
     public function destroy(Ticket $ticket)
     {
+
         if ($ticket->assignedTo) {
             return redirect()->route('ticket.show', $ticket->id)->with('error', 'This ticket is assigned');
         } else {
@@ -104,6 +132,7 @@ class TicketController extends Controller
         if (!auth()->check() || !auth()->user()->isAdmin()) {
             abort(403);
         } 
+
         $users = User::all();
         $tickets = $query->get();
 
