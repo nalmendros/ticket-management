@@ -104,6 +104,12 @@
             <p>There are not tickets.</p>
             @endforelse
         </table>
+        @if (session('success'))
+            <x-message type='success' :message="session('success')" />
+        @endif
+        @if (session('error'))
+            <x-message type='error' :message="session('error')" />
+        @endif
     </div>
 </div>
 </x-app-layout>

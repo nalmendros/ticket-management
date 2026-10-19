@@ -31,10 +31,11 @@
         </tbody>
     </table>
     @if (session('success'))
-        <p style="color: green">{{ session('success') }}</p>
+        <x-message type='success' :message="session('success')" />
     @endif
     @if (session('error'))
-    <p style="color: red">{{ session('error') }}</p>
+        <x-message type='error' :message="session('error')" />
     @endif
+    
 </div>
 </x-app-layout>
