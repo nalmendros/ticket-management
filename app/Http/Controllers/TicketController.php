@@ -134,12 +134,11 @@ class TicketController extends Controller
             $query->where('priority', $request->searchPriority);
         }
         
+        
         if ($request->filled('searchUser')) {
-            if ($request->searchUser === 'null') {
-                $query->whereNull('assigned_to');
-            } else {
-                $query->where('assigned_to', $request->searchUser);
-            }
+            $request->searchUser === 'null'
+                ? $query->whereNull('assigned_to')
+                : $query->where('assigned_to', $request->searchUser);
         }
 
         $users = User::all();
