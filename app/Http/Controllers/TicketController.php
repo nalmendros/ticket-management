@@ -104,13 +104,17 @@ class TicketController extends Controller
 
     public function destroy(Ticket $ticket)
     {
+        $user = Auth::user();
 
-        if ($ticket->assignedTo) {
-            return redirect()->route('ticket.show', $ticket->id)->with('error', 'This ticket is assigned');
-        } else {
-            $ticket->delete();
+        $canDelete = ($user->role === 'admin' && !$ticket->assignedTo) || ($user->role === 'user' && $ticket->assignedTo?->id === $user->id && $ticket->status === 'resolved');
+
+        if (!$canDelete) {
+            return redirect()->route('ticket.show', $ticket->id)->with('error', 'This ticket is assigned or it is not resolved.');
         }
-        return redirect()->route('ticket.index')->with('success');
+
+        $ticket->delete();
+
+        return redirect()->route('ticket.index')->with('success', 'Ticket deleted successfully.');
     }
 
     public function ticketControl(Request $request)

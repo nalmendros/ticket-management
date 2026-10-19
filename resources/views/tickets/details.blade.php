@@ -15,7 +15,6 @@
                 <td class="border border-gray-400 p-4">Status</td>
                 <td class="border border-gray-400 p-4">Priority</td>
                 <td class="border border-gray-400 p-4">Created At</td>
-                <td class="border border-gray-400 p-4 rounded-tr-xl">Actions</td>
             </tr>
         </thead>
         <tbody>
@@ -27,16 +26,6 @@
                 <td class="border border-gray-400 p-4">{{$ticket->status}}</td>
                 <td class="border border-gray-400 p-4">{{$ticket->priority}}</td>
                 <td class="border border-gray-400 p-4">{{$ticket->created_at}}</td>
-                <td class="border border-gray-400 p-4">
-                    <div class="flex gap-2 items-center">
-                        <form method="POST" action="{{ route('ticket.destroy', $ticket->id) }}" onsubmit = "return confirm('Are you sure you want to delete this ticket?')">
-                            @csrf
-                            @method('DELETE')
-                            <button value="delete" class="bg-red-500 hover:bg-red-400 p-2.5 rounded-xl transition duration-300">Delete</button>
-                        </form>
-                        <a href="{{ route('ticket.edit', $ticket->id) }}" class="bg-blue-400 hover:bg-blue-300 p-3 rounded-xl transition duration-300">Edit</a>
-                    </div>
-                </td>
             </tr>
         </tbody>
     </table>

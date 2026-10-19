@@ -21,7 +21,7 @@ class TicketPolicy
      */
     public function view(User $user, Ticket $ticket): Response
     {
-        return ($user->id === $ticket->created_by || $user->isAdmin())
+        return ($user->id === $ticket->created_by || $user->isAdmin() || $user->id === $ticket->assigned_to)
             ? Response::allow()
             : Response::deny('You do not own this Ticket.')
         ;
