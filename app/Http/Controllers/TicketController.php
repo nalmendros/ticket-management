@@ -13,8 +13,7 @@ class TicketController extends Controller
     public function index()
     {
         $userId = Auth::id();
-        $tickets = Ticket::where('assigned_to', $userId)
-        ->orWhere('created_by', $userId)
+        $tickets = Ticket::where('created_by', $userId)
         ->get();
 
         return view('tickets.list', compact('tickets'));
@@ -102,18 +101,14 @@ class TicketController extends Controller
         return redirect()->route('ticket.show', $ticket->id)->with('success', 'Ticket updated successfully.');
     }
 
-    public function destroy(Ticket $ticket)
+    public function destroy(Ticket $ticket, Request $request)
     {
-        $user = Auth::user();
-        $canDelete = ($user->role === 'admin' && !$ticket->assignedTo) || ($user->role === 'user' && $ticket->assignedTo?->id === $user->id && $ticket->status === 'resolved');
-
-        if (!$canDelete) {
+        if ($request->user()->cannot('delete', $ticket)) {
             return redirect()->route('ticket.show', $ticket->id)->with('error', 'This ticket is assigned or it is not resolved.');
+        } else {
+            $ticket->delete();
+            return redirect()->route('ticket.index')->with('success', 'Ticket deleted successfully.');
         }
-
-        $ticket->delete();
-
-        return redirect()->route('ticket.index')->with('success', 'Ticket deleted successfully.');
     }
 
     public function ticketControl(Request $request)
