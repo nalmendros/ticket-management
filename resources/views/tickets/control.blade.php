@@ -22,23 +22,19 @@
             
         </div>
         <div>
-            @php 
-                $statuses = ['Pending', 'In Process', 'Resolved'];
-                $priorities = ['Low', 'Medium', 'High'];
-            @endphp
 
             <select id="searchStatus" name="searchStatus" class="rounded-xl">
                 <option value="">All Statuses</option>
-                @foreach ($statuses as $status)
-                    <option value="{{ $status }}" {{ request('searchStatus') == $status ? 'selected' : '' }}>{{ $status }}</option>
+                @foreach (App\Models\Ticket::STATUSES as $status)
+                    <option value="{{ $status }}" {{ request('searchStatus') == $status ? 'selected' : '' }}>{{ Str::headline($status) }}</option>
                 @endforeach
         </select>
         </div>
         <div>
             <select id="searchPriority" name="searchPriority" class="rounded-xl">
             <option value="">All Priorities</option>
-            @foreach ($priorities as $priority)
-                <option value="{{ $priority }}" {{ request('searchPriority') == $priority ? 'selected' : ''}} >{{ $priority }}</option>
+            @foreach (App\Models\Ticket::PRIORITIES as $priority)
+                <option value="{{ $priority }}" {{ request('searchPriority') == $priority ? 'selected' : ''}} >{{ Str::headline($priority) }}</option>
             @endforeach
         </select>
         </div>
@@ -79,8 +75,8 @@
                     <td class="border border-gray-400 p-4">{{$ticket->description}}</td>
                     <td class="border border-gray-400 p-4">{{$ticket->createdBy->name ?? 'Anonimous'}}</td>
                     <td class="border border-gray-400 p-4">{{$ticket->assignedTo->name ?? 'Not assigned yet'}}</td>
-                    <td class="border border-gray-400 p-4">{{$ticket->status}}</td>
-                    <td class="border border-gray-400 p-4">{{$ticket->priority}}</td>
+                    <td class="border border-gray-400 p-4">{{Str::headline($ticket->status)}}</td>
+                    <td class="border border-gray-400 p-4">{{Str::headline($ticket->priority)}}</td>
                     <td class="border border-gray-400 p-4">{{$ticket->created_at}}</td>
                     <td class="border border-gray-400 p-4">
                         <div class="flex gap-2">
