@@ -6,6 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ticket extends Model
 {
+    const STATUSES = [
+        'pending',
+        'in_process',
+        'resolved'
+    ];
+
+    const PRIORITIES = [
+        'low',
+        'medium',
+        'high'
+    ];
+    
     protected $fillable = [
         'created_by',
         'assigned_to',

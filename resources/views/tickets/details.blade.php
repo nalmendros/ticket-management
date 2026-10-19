@@ -1,3 +1,4 @@
+
 <x-app-layout>
 <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -23,8 +24,8 @@
                 <td class="border border-gray-400 p-4">{{$ticket->description}}</td>
                 <td class="border border-gray-400 p-4">{{$ticket->createdBy->name ?? 'Anonimous'}}</td>
                 <td class="border border-gray-400 p-4">{{$ticket->assignedTo->name ?? 'Not assigned yet'}}</td>
-                <td class="border border-gray-400 p-4">{{$ticket->status}}</td>
-                <td class="border border-gray-400 p-4">{{$ticket->priority}}</td>
+                <td class="border border-gray-400 p-4">{{Str::headline($ticket->status)}}</td>
+                <td class="border border-gray-400 p-4">{{Str::headline($ticket->priority)}}</td>
                 <td class="border border-gray-400 p-4">{{$ticket->created_at}}</td>
             </tr>
         </tbody>
