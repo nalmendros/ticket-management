@@ -14,7 +14,7 @@ class TicketController extends Controller
     {
         $userId = Auth::id();
         $tickets = Ticket::where('assigned_to', $userId)
-        ->orWhere('created_by', $user)
+        ->orWhere('created_by', $userId)
         ->get();
 
         return view('tickets.list', compact('tickets'));
