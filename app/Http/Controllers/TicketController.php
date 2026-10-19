@@ -105,7 +105,6 @@ class TicketController extends Controller
     public function destroy(Ticket $ticket)
     {
         $user = Auth::user();
-
         $canDelete = ($user->role === 'admin' && !$ticket->assignedTo) || ($user->role === 'user' && $ticket->assignedTo?->id === $user->id && $ticket->status === 'resolved');
 
         if (!$canDelete) {
