@@ -50,7 +50,11 @@ class TicketPolicy
      */
     public function delete(User $user, Ticket $ticket): bool
     {
-        return $user->id === auth()->check()->isAdmin();
+        if($user->role === 'admin') return true;
+
+        if($user->role === "user" && $ticket->status === "pending" && !$ticket->assigned_to) return true;
+
+        return false;
     }
 
     /**
