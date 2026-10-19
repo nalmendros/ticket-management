@@ -104,10 +104,10 @@ class TicketController extends Controller
     public function destroy(Ticket $ticket, Request $request)
     {
         if ($request->user()->cannot('delete', $ticket)) {
-            return redirect()->route('ticket.index', $ticket->id)->with('error', 'This ticket is assigned or it is not resolved.');
+            return redirect()->back()->with('error', 'This ticket is assigned or it is not resolved.');
         } else {
             $ticket->delete();
-            return redirect()->route('ticket.index')->with('success', 'Ticket deleted successfully.');
+            return redirect()->back()->with('success', 'Ticket deleted successfully.');
         }
     }
 

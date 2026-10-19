@@ -22,10 +22,10 @@ Como ya se habia creado un TicketPolicy para manejar los permisos, se ha añadid
 App\Http\Controllers\TicketController.php
 
 if ($request->user()->cannot('delete', $ticket)) {
-    return redirect()->route('ticket.show', $ticket->id)->with('error', 'This ticket is assigned or it is not resolved.');
+    return redirect()->back()->with('error', 'This ticket is assigned or it is not resolved.');
 } else {
     $ticket->delete();
-    return redirect()->route('ticket.index')->with('success', 'Ticket deleted successfully.');
+    return redirect()->back()->with('success', 'Ticket deleted successfully.');
 }
 ``
 
