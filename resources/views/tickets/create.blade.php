@@ -37,7 +37,7 @@
         <button value="create" id="button" class="cursor-pointer bg-[#06ba77] p-3 rounded-xl hover:bg-[#333333] hover:text-white transition duration-300">Create</button>
         
         @if (session('success'))
-        <p style="color: green">{{ session('success') }}</p>
+            <x-message type='success' :message="session('success')" />
         @endif
     </form>
     @if ($errors->any())
