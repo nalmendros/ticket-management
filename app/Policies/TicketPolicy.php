@@ -52,7 +52,7 @@ class TicketPolicy
     {
         if($user->role === 'admin') return true;
 
-        if($user->role === "user" && $ticket->status === "pending" && !$ticket->assigned_to) return true;
+        if($user->role === "user" && $ticket->status === "pending" && !$ticket->assigned_to && $ticket->created_by === $user->id) return true;
 
         return false;
     }
