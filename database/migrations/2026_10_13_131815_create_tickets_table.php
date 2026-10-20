@@ -18,8 +18,8 @@ return new class extends Migration
             $table->foreignId('assigned_to')->nullable()->constrained('users');
             $table->string('title'); // Un breve texto que resuma la incidencia
             $table->text('description'); // La descripción puede ser más larga
-            $table->enum('status', ['pending', 'in_process', 'resolved']); // enum ya que son 3 posibles estados del ticket
-            $table->enum('priority', ['low', 'medium', 'high']);
+            $table->enum('status', \App\Models\Ticket::STATUSES); // enum ya que son 3 posibles estados del ticket
+            $table->enum('priority', \App\Models\Ticket::PRIORITIES);
             $table->timestamps();
         });
     }

@@ -8,15 +8,15 @@ use Illuminate\Database\Eloquent\Builder;
 class Ticket extends Model
 {
     const STATUSES = [
-        'pending',
-        'in_process',
-        'resolved'
+        'Pending',
+        'In Process',
+        'Resolved'
     ];
 
     const PRIORITIES = [
-        'low',
-        'medium',
-        'high'
+        'Low',
+        'Medium',
+        'High'
     ];
 
     protected $fillable = [

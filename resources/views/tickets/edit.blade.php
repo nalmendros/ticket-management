@@ -29,17 +29,23 @@
             </select>   
             <label for="status">Status</label>
             <select id="status" name="status" class="rounded-xl">
-                <option value="{{ $ticket->status }}" selected>{{ Str::headline($ticket->status) }}</option>
-                <option value="pending">Pending</option>
-                <option value="in_process">In Process</option>
-                <option value="resolved">Resolved</option>
+                @foreach (App\Models\Ticket::STATUSES as $status)
+                    @if($ticket->status === $status)
+                    <option value="{{ $status }}" selected>{{ $status}}</option>
+                    @else
+                    <option value="{{ $status }}" >{{ $status }}</option>
+                    @endif
+                @endforeach
             </select>
             <label for="priority">Priority</label>
             <select id="priority" name="priority" class="rounded-xl">
-                <option value="{{ $ticket->priority }}" selected>{{ Str::headline($ticket->priority) }}</option>
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
+                @foreach (App\Models\Ticket::PRIORITIES as $priority)
+                    @if($ticket->priority === $priority)
+                    <option value="{{ $priority }}" selected>{{ $priority}}</option>
+                    @else
+                    <option value="{{ $priority }}" >{{ $priority }}</option>
+                    @endif
+                @endforeach
             </select>
         @endif
         <button value="create" id="button" class="cursor-pointer bg-[#06ba77] p-3 rounded-xl hover:bg-[#333333] hover:text-white transition duration-300">Confirm Edit</button>

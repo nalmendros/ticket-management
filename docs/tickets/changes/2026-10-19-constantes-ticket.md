@@ -35,6 +35,23 @@ const PRIORITIES = [
 
 ``
 
+``
+2026_10_13_131815_create_tickets_table.php
+
+$table->enum('status', \App\Models\Ticket::STATUSES);
+$table->enum('priority', \App\Models\Ticket::PRIORITIES);
+``
+
+``
+App\Http\Controllers\TicketController.php
+
+'status' => 'required|in:' . implode(',', Ticket::STATUSES),
+'priority' => 'required|in:' . implode(',', Ticket::PRIORITIES),
+
+- Implode: Junta los elementos del array en un string separado en comas.
+
+``
+
 ## Respuesta ligera
 
-Ahora si se quiere acceder a los Status y Priorities se puede hacer mediante las constantes; $ticket->status = Ticket::STATUSES/PRIORITIES;
+Los valores de Status y Priority se verán reflejados de manera igual en todas las vistas del blade sin tener que añadir ninguna linea de código para formatearlas.

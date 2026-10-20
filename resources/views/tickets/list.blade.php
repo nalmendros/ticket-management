@@ -28,8 +28,8 @@
                 <tr>
                     <td class="border border-gray-400 p-4">{{$ticket->title}}</td>
                     <td class="border border-gray-400 p-4">{{$ticket->assignedTo->name ?? 'Not assigned yet'}}</td>
-                    <td class="border border-gray-400 p-4">{{Str::headline($ticket->status)}}</td>
-                    <td class="border border-gray-400 p-4">{{Str::headline($ticket->priority)}}</td>
+                    <td class="border border-gray-400 p-4">{{$ticket->status}}</td>
+                    <td class="border border-gray-400 p-4">{{$ticket->priority}}</td>
                     <td class="border border-gray-400 p-4">
                         <div class="flex gap-2">
                             <a href="{{ route('ticket.show', $ticket->id )}}" class="cursor-pointer p-3 rounded-xl hover:bg-[#333333] hover:text-white transition duration-300"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">

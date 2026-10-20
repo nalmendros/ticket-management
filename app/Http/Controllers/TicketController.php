@@ -41,8 +41,8 @@ class TicketController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required',
             'assigned_to' => 'nullable|exists:users,id',
-            'status' => 'required|in:pending,in_process,resolved',
-            'priority' => 'required|in:low,medium,high',
+            'status' => 'required|in:' . implode(',', Ticket::STATUSES), // Implode: Junta elementos del array en un string separado en comas
+            'priority' => 'required|in:' . implode(',', Ticket::PRIORITIES),
         ]);
 
         $ticket = Ticket::create([
@@ -87,8 +87,8 @@ class TicketController extends Controller
         if ($request->user()->isAdmin()) {
             $adminData = $request->validate([
                 'assigned_to' => 'nullable|exists:users,id',
-                'status' => 'required|in:pending,in_process,resolved',
-                'priority' => 'required|in:low,medium,high',
+                'status' => 'required|in:' . implode(',', Ticket::STATUSES),
+                'priority' => 'required|in:' . implode(',', Ticket::PRIORITIES),
             ]);
 
             $ticket->assigned_to = $adminData['assigned_to'];
