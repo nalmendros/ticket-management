@@ -1,36 +1,8 @@
-# User Permissions
+# Ticket Policy
 
-## Funcionalidad
+## Definición
 
-La funcionalidad de los permisos para el sistema de ticket nos permite diferencias entre un usuario normal y un administrador. 
-
-Cada rol separa las acciones permitidas del sistema.
-
-## Function isAdmin()
-
-La función isAdmin() aplicada en App\Models\User.php nos permite usarla para verificar si el usuario autenticado tiene el rol de administrador.
-
-``
-public function isAdmin(): bool {
-        return $this->role === 'admin';
-    }
-``
-
-## Blade
-
-Esta condición permite la visibilidad de la ruta solo para al administrador.
-
-``
-@if (auth()->user()->isAdmin())
-    <x-nav-link :href="route('ticket.control')" :active="request()->routeIs('ticket.control')">
-    {{ __('Tickets Control') }}
-    </x-nav-link>
-@endif
-``
-
-## Policies
-
-Las Policies nos permiten organizar lógica de los permisos en un Modelo.
+La creación de una policy sobre un modelo nos permite controlar los permisos de cada acción del modelo.
 
 ```sh
 ./vendor/bin/sail php artisan make:policy TicketPolicy
@@ -62,7 +34,3 @@ public function update(Request $request, $id)
 ``
 
 En este caso solo pueden actualizar el ticket el administrador o el creador del ticket.
-
-
-
-
