@@ -12,24 +12,14 @@ Se selecciona a petición del usuario, he integrado un botón que da la función
 ## Flujo actual
 
 ``
-$query = Ticket::query();
+$users = $request->searchUser;
+$statuses = $request->searchStatus;
+$priorities = $request->searchPriority;
 
-        if ($request->searchStatus) {
-            $query->where('status', $request->searchStatus);
-        }
-        if ($request->searchPriority) {
-            $query->where('priority', $request->searchPriority);
-        }
-        if ($request->searchUser) {
-            $query->where('assigned_to', $request->searchUser);
-        }
-        
-        if (!auth()->check() | !auth()->user()->isAdmin()) {
-            abort(403);
-        } 
-        $users = User::all();
-        $tickets = $query->get();
-
-        return view('tickets.control', compact('tickets', 'users'));
+$tickets = Ticket::query()
+    ->byUsers($users)
+    ->byStatuses($statuses)
+    ->byPriorities($priorities)
+    ->get();
 ``
 
