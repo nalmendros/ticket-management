@@ -29,14 +29,14 @@
             </select>   
             <label for="status">Status</label>
             <select id="status" name="status" class="rounded-xl">
-                <option value="{{ $ticket->status }}" selected>{{ $ticket->status }}</option>
+                <option value="{{ $ticket->status }}" selected>{{ Str::headline($ticket->status) }}</option>
                 <option value="pending">Pending</option>
                 <option value="in_process">In Process</option>
                 <option value="resolved">Resolved</option>
             </select>
             <label for="priority">Priority</label>
             <select id="priority" name="priority" class="rounded-xl">
-                <option value="{{ $ticket->priority }}" selected>{{ $ticket->priority }}</option>
+                <option value="{{ $ticket->priority }}" selected>{{ Str::headline($ticket->priority) }}</option>
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
                 <option value="high">High</option>
