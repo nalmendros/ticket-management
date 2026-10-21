@@ -96,11 +96,11 @@ class TicketController extends Controller
                 'status' => 'required|in:' . implode(',', Ticket::STATUSES),
                 'priority' => 'required|in:' . implode(',', Ticket::PRIORITIES),
             ]);
-
             $ticket->assigned_to = $adminData['assigned_to'];
             $ticket->status = $adminData['status'];
             $ticket->priority = $adminData['priority'];
-            return redirect()->route('ticket.control', $ticket->id)->with('success', 'Ticket updated successfully.');
+
+            //return redirect()->route('ticket.control', $ticket->id)->with('success', 'Ticket updated successfully.');
         }
 
         $ticket->save();
@@ -110,7 +110,7 @@ class TicketController extends Controller
 
     public function destroy(Ticket $ticket, Request $request)
     {
-        if ($request->user()->cannot('delete', $ticket)) {
+        if ($request->user()->cannot('delete', $ticket)) {            
             return redirect()->back()->with('error', 'This ticket is assigned or it is not resolved.');
         } else {
             $ticket->delete();

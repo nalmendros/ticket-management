@@ -5,6 +5,8 @@ namespace App\Policies;
 use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Log;
+
 
 class TicketPolicy
 {
@@ -56,10 +58,10 @@ class TicketPolicy
     public function delete(User $user, Ticket $ticket): bool
     {
         if($user->role === 'admin') return true;
-
+        
         if($user->role === 'user' 
-        && $ticket->status === 'pending'
-        && !$ticket->assigned_to 
+        && $ticket->status === 'Pending'
+        && !$ticket->assigned_to
         && $ticket->created_by === $user->id) return true;
 
         return false;
