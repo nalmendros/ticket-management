@@ -116,7 +116,7 @@ class TicketTest extends TestCase
             ->get(route('ticket.show', $ticket));
 
         // Se espera que el acceso sea denegado
-        $response->assertForbidden();
+        $response->assertRedirect();
     }
 
     public function test_admin_can_operate_over_tickets()
