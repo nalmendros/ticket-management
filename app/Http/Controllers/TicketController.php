@@ -109,6 +109,7 @@ class TicketController extends Controller
             $ticket->delete();
             return redirect()->back()->with('success', 'Ticket deleted successfully.');
         }
+
     }
 
     public function ticketControl(Request $request)
