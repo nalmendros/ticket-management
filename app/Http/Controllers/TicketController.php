@@ -100,7 +100,7 @@ class TicketController extends Controller
             $ticket->status = $adminData['status'];
             $ticket->priority = $adminData['priority'];
 
-            //return redirect()->route('ticket.control', $ticket->id)->with('success', 'Ticket updated successfully.');
+            return redirect()->route('ticket.control', $ticket->id)->with('success', 'Ticket updated successfully.');
         }
 
         $ticket->save();
