@@ -219,5 +219,8 @@
         @if (Route::has('login'))
             <div class="h-14.5 hidden lg:block"></div>
         @endif
+        @if (session('error'))
+            <x-message type='error' :message="session('error')" />
+        @endif
     </body>
 </html>
