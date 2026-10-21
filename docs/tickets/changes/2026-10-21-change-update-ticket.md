@@ -23,7 +23,9 @@ if ($user->isAdmin()) {
     return true;
 }
 
-return $ticket->user_id === $user->id;
+if ($user->id === $ticket->created_by) return true;
+
+return false;
 
 ``
 
@@ -34,7 +36,11 @@ public function update(Request $request, $id)
 {
     
     $ticket = Ticket::findOrFail($id);
-    $this->authorize('update', $ticket);
+
+    if ($request->user()->cannot('update', $ticket)) {
+        return redirect()->back()
+            ->with('error', 'You are not authorized to update this ticket.');
+    }
 
     $user = $request->user();
 
@@ -46,7 +52,7 @@ public function update(Request $request, $id)
     $ticket->title = $validated['title'];
     $ticket->description = $validated['description'];
 
-    if (user()->isAdmin()) {
+    if ($user->isAdmin()) {
         $adminData = $request->validate([
             'assigned_to' => 'nullable|exists:users,id',
             'status' => 'required|in:' . implode(',', Ticket::STATUSES),
@@ -56,11 +62,12 @@ public function update(Request $request, $id)
         $ticket->assigned_to = $adminData['assigned_to'];
         $ticket->status = $adminData['status'];
         $ticket->priority = $adminData['priority'];
+        return redirect()->route('ticket.control', $ticket->id)->with('success', 'Ticket updated successfully.');
     }
 
     $ticket->save();
     
-    return redirect()->route('ticket.show', $ticket->id)->with('success', 'Ticket updated successfully.');
+    return redirect()->route('ticket.index', $ticket->id)->with('success', 'Ticket updated successfully.');
 }
 ``
 
