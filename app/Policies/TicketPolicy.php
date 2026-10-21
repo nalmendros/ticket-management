@@ -19,12 +19,13 @@ class TicketPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Ticket $ticket): Response
+    public function view(User $user, Ticket $ticket): bool
     {
-        return ($user->id === $ticket->created_by || $user->isAdmin() || $user->id === $ticket->assigned_to)
-            ? Response::allow()
-            : Response::deny('You do not own this Ticket.')
-        ;
+        if ($user->isAdmin()) return true;
+
+        if ($user->id === $ticket->created_by) return true;
+
+        return false;
     }
 
     /**

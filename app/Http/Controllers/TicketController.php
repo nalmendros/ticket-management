@@ -23,7 +23,8 @@ class TicketController extends Controller
     public function show(Ticket $ticket, Request $request)
     {
         if ($request->user()->cannot('view', $ticket)) {
-            abort(403);
+            return redirect()->back()
+                ->with('error', 'You are not authorized to view this ticket.');
         }
         return view('tickets.details', compact('ticket'));
     }
@@ -62,7 +63,8 @@ class TicketController extends Controller
     public function edit(Ticket $ticket, Request $request)
     {
         if ($request->user()->cannot('view', $ticket)) {
-            abort(403);
+            return redirect()->back()
+                ->with('error', 'You are not authorized to view this ticket.');
         }
         $users = User::all();
         return view('tickets.edit', compact('ticket', 'users'));
