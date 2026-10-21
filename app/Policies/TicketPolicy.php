@@ -38,13 +38,15 @@ class TicketPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Ticket $ticket): Response
+    public function update(User $user, Ticket $ticket): bool
     {
         if ($user->isAdmin()) {
             return true;
         }
 
-        return $ticket->user_id === $user->id;
+        if ($user->id === $ticket->created_by) return true;
+
+        return false;
     }
 
     /**

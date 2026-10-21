@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 
 class TicketController extends Controller
 {
+
     public function index()
     {
         $userId = Auth::id();
@@ -71,7 +72,11 @@ class TicketController extends Controller
     {
         
         $ticket = Ticket::findOrFail($id);
-        $this->authorize('update', $ticket);
+
+        if ($request->user()->cannot('update', $ticket)) {
+            return redirect()->back()
+                ->with('error', 'You are not authorized to update this ticket.');
+        }
 
         $user = $request->user();
 
@@ -83,7 +88,7 @@ class TicketController extends Controller
         $ticket->title = $validated['title'];
         $ticket->description = $validated['description'];
 
-        if (user()->isAdmin()) {
+        if ($user->isAdmin()) {
             $adminData = $request->validate([
                 'assigned_to' => 'nullable|exists:users,id',
                 'status' => 'required|in:' . implode(',', Ticket::STATUSES),
@@ -93,11 +98,12 @@ class TicketController extends Controller
             $ticket->assigned_to = $adminData['assigned_to'];
             $ticket->status = $adminData['status'];
             $ticket->priority = $adminData['priority'];
+            return redirect()->route('ticket.control', $ticket->id)->with('success', 'Ticket updated successfully.');
         }
 
         $ticket->save();
         
-        return redirect()->route('ticket.show', $ticket->id)->with('success', 'Ticket updated successfully.');
+        return redirect()->route('ticket.index', $ticket->id)->with('success', 'Ticket updated successfully.');
     }
 
     public function destroy(Ticket $ticket, Request $request)
