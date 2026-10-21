@@ -40,9 +40,11 @@ class TicketPolicy
      */
     public function update(User $user, Ticket $ticket): Response
     {
-        return ($user->id === $ticket->created_by || $user->isAdmin())
-            ? Response::allow()
-            : Response::deny('You do not own this Ticket.');
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        return $ticket->user_id === $user->id;
     }
 
     /**

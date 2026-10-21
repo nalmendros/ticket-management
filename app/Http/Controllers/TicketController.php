@@ -71,10 +71,9 @@ class TicketController extends Controller
     {
         
         $ticket = Ticket::findOrFail($id);
-        
-        if ($request->user()->cannot('update', $ticket)) {
-            abort(403);
-        }
+        $this->authorize('update', $ticket);
+
+        $user = $request->user();
 
         $validated = $request->validate([
             'title' => 'required|string|max:255',
@@ -84,7 +83,7 @@ class TicketController extends Controller
         $ticket->title = $validated['title'];
         $ticket->description = $validated['description'];
 
-        if ($request->user()->isAdmin()) {
+        if (user()->isAdmin()) {
             $adminData = $request->validate([
                 'assigned_to' => 'nullable|exists:users,id',
                 'status' => 'required|in:' . implode(',', Ticket::STATUSES),
